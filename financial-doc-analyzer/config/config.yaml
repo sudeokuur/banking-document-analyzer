@@ -1,0 +1,38 @@
+# Model used for all extraction calls (KPI extraction, risk extraction, summarization).
+provider:
+  name: anthropic          # openai | anthropic | google
+  model: claude-sonnet-5
+  temperature: 0.1
+  max_tokens: 4096
+
+# Long documents are split into overlapping chunks before extraction.
+chunking:
+  max_chars_per_chunk: 12000
+  overlap_chars: 500
+
+# OCR fallback settings (used when a PDF page yields little/no extractable text).
+ocr:
+  min_chars_for_text_page: 40   # below this, treat the page as scanned and OCR it
+  dpi: 300
+
+# Guidance categories passed into extraction prompts. The model isn't restricted to
+# these — it groups metrics/risks under them where they fit and uses "other" otherwise.
+kpi_categories:
+  - profitability       # net income, ROE, ROA, net interest margin, efficiency ratio
+  - capital_adequacy    # CET1 ratio, Tier 1 capital ratio, leverage ratio
+  - asset_quality       # NPL ratio, loan loss provisions, charge-off rate
+  - liquidity           # LCR, loan-to-deposit ratio, cash reserves
+  - growth              # loan growth, deposit growth, revenue growth
+  - other
+
+risk_categories:
+  - credit_risk
+  - market_risk
+  - interest_rate_risk
+  - liquidity_risk
+  - operational_risk
+  - regulatory_compliance
+  - cybersecurity
+  - macroeconomic
+  - reputational
+  - other
